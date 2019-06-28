@@ -1,52 +1,47 @@
-# Global values for all helm charts. See comments for usage
-#
-# NOTE: If you update this file beware to not commit/push inside your repo!
-# Instead of updating this file, can place a updated copy of it in helm/__values folder and use the -valuesFile parameter of Deploy-Images-Aks.ps1 script.
-# Everything on helm/__values folder is ignored by .gitignore.
+# Template for generating a gvalues file
 
 inf:
   sa: ttsa
   db:
     products:
-      host: # DB HOST LIKE tailwindtradersserver-dev.database.windows.net
+      host: ttsqlservertnlazct26g5ne.database.windows.net
       port: "1433"
-      catalog: # DB NAME LIKE  Microsoft.Tailwind.Products-dev
-      user: # ADMIN USERNAME LIKE tailadmin
-      pwd: # ADMIN PWD
+      catalog: products
+      user: sqladmin
+      pwd: P2ssw0rd@123
     profile:
-      host: # DB HOST LIKE tailwindtradersserver-dev.database.windows.net
+      host: ttsqlservertnlazct26g5ne.database.windows.net
       port: "1433"
-      catalog: # DB NAME LIKE  Microsoft.Tailwind.Profile-dev
-      user: # ADMIN USERNAME LIKE tailadmin
-      pwd: # ADMIN PWD
+      catalog: profile
+      user: sqladmin
+      pwd: P2ssw0rd@123
     coupons:
-      user: # COSMOS USER tailwindtraders-coupons-dev
-      pwd: # COSMOS PWD 
-      host: # COSMOS HOST LIKE tailwindtraders-coupons-dev.documents.azure.com
+      user: ttcuoponsdbtnlazct26g5ne
+      pwd: M4bJDHyhkMxGhyQ6o38kUBcgk2qaZpZT5n37j6fggKB1jJAokunDWFu9OmK70xT0x9qbYLGjsUzRb2La0IyGCg==
+      host: ttcuoponsdbtnlazct26g5ne.documents.azure.com
       port: "10255"
       dbName: Coupon
-      constr: # COSMOS CONSTR
       collection: CouponCollection   
     popularproducts:
-      host: # DB HOST LIKE tailwindtradersserver-dev.database.windows.net
+      host: ttsqlservertnlazct26g5ne.database.windows.net
       port: "1433"
-      catalog: # DB NAME LIKE  Microsoft.Tailwind.PopularProduct-dev
-      user: # ADMIN USERNAME LIKE tailadmin
-      pwd: # ADMIN PWD  
+      catalog: popularproducts
+      user: sqladmin
+      pwd: P2ssw0rd@123
     stock:
-      host: # PostgreSQL Host LIKE tailwindtradersdev.postgres.database.azure.com
+      host: ttpgtnlazct26g5ne.postgres.database.azure.com
       port: "5432"
-      catalog: # DB NAME LIKE stockdb
-      user: # ADMIN USERNAME LIKE tailadmin
-      pwd: # ADMIN PWD  
+      catalog: stockdb
+      user: sqladmin@ttpgtnlazct26g5ne
+      pwd: P2ssw0rd@123
     cart:
-      host: # COMSOS HOST FOR THE CART like https://ttwebbasket-dev.documents.azure.com:443/
-      auth: # COSMOS AUTH KEY
+      host: https://ttshoppingdbtnlazct26g5ne.documents.azure.com:443/
+      auth: IVjQ8eM5d8IQbizAW3BSfKUVUKu7adxtBgU0murH8cG65fDDg6CNwzllhCtlfxErHrIaC9Rq555qrHoQriQ0WA==
   storage:
-    productimages: https://tailwindtraders.blob.core.windows.net/product-list
-    productdetailimages: https://tailwindtraders.blob.core.windows.net/product-detail
-    couponimage: https://tailwindtraders.blob.core.windows.net/coupon-list
-    profileimages: https://tailwindtraders.blob.core.windows.net/profiles-list
+    productimages: https://ttstoragetnlazct26g5ne.blob.core.windows.net/product-list
+    productdetailimages: https://ttstoragetnlazct26g5ne.blob.core.windows.net/product-detail
+    couponimage: https://ttstoragetnlazct26g5ne.blob.core.windows.net/coupon-list
+    profileimages: https://ttstoragetnlazct26g5ne.blob.core.windows.net/profiles-list
   appinsights:
     id: ""
   ingress:
@@ -67,7 +62,7 @@ inf:
     webbff:
       path: /webbff    
     login:
-      path: /login-api
+      path: /login-api      
     cart:
       path: /cart-api
   apiurls:
