@@ -1,0 +1,98 @@
+# Template for generating a gvalues file
+
+inf:
+  sa: ttsa
+  db:
+    products:
+      host: ttsqlservertnlazct26g5ne.database.windows.net
+      port: "1433"
+      catalog: products
+      user: sqladmin
+      pwd: P2ssw0rd@123
+    profile:
+      host: ttsqlservertnlazct26g5ne.database.windows.net
+      port: "1433"
+      catalog: profile
+      user: sqladmin
+      pwd: P2ssw0rd@123
+    coupons:
+      user: ttcuoponsdbtnlazct26g5ne
+      pwd: ocuVPLjwxMuutjealTUHrwLqsVoi0X1bEOCMVb5dDBKKo0pfdxPlO5a3uWpvgthgU1oQupimBf1kiZ9ALY2Kbg==
+      host: ttcuoponsdbtnlazct26g5ne.documents.azure.com
+      port: "10255"
+      dbName: Coupon
+      collection: CouponCollection   
+    popularproducts:
+      host: ttsqlservertnlazct26g5ne.database.windows.net
+      port: "1433"
+      catalog: popularproducts
+      user: sqladmin
+      pwd: P2ssw0rd@123
+    stock:
+      host: ttpgtnlazct26g5ne.postgres.database.azure.com
+      port: "5432"
+      catalog: stockdb
+      user: sqladmin@ttpgtnlazct26g5ne
+      pwd: P2ssw0rd@123
+    cart:
+      host: https://ttshoppingdbtnlazct26g5ne.documents.azure.com:443/
+      auth: gL1mp7SmS5FiYJAGB6Lc36OUEnIJqbjCJbYxbgO3viNuiCrs846Hv6FHWBOsG0NCQeauFJsonS3Sog5Iu8nnCQ==
+  storage:
+    productimages: https://ttstoragetnlazct26g5ne.blob.core.windows.net/product-list
+    productdetailimages: https://ttstoragetnlazct26g5ne.blob.core.windows.net/product-detail
+    couponimage: https://ttstoragetnlazct26g5ne.blob.core.windows.net/coupon-list
+    profileimages: https://ttstoragetnlazct26g5ne.blob.core.windows.net/profiles-list
+  appinsights:
+    id: ""
+  ingress:
+    products:
+      path: /product-api
+    profile:
+      path: /profile-api
+    coupons:
+      path: /coupons-api
+    popularproducts:
+      path: /popular-products-api
+    stock:
+      path: /stock-api
+    imageclassifier:
+      path: /image-classifier-api
+    mobilebff:
+      path: /mobilebff
+    webbff:
+      path: /webbff    
+    login:
+      path: /login-api      
+    cart:
+      path: /cart-api
+  apiurls:
+    popularproductsapiurl: http://popularproducts
+    productsapiurl: http://product 
+    profileapiurl: http://profile
+    couponsapiurl: http://coupons
+    stockapiurl: http://stock
+    imageclassifierapiurl: http://imageclassifier
+    loginapiurl: http://login
+az:
+  productvisitsurl: ""
+
+# Shared ingress configurations
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+    ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /
+#  hosts:
+#    - <guid>.<region>.aksapp.io   # NOT NEEDED. SET BY SCRIPTS
+
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+sec:
+  issuer: TTFakeLogin
+  securityKey: nEpLzQJGNSCNL5H6DIQCtTdNxf5VgAGcBbtXLms1YDD01KJBAs0WVawaEjn97uwB
