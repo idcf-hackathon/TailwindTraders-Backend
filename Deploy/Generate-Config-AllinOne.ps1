@@ -66,6 +66,13 @@ if ($forcePwd) {
     az postgres server update -n $pg.name -g $resourceGroup -p $sqlPwd
 }
 
+## Get AksHost
+$aksname = $(az aks list -g TailwindTradersBackend --query "[].{name:name}" -o json | ConvertFrom-Json)
+$aksHost=$(az aks show -n $aksName -g $resourceGroup --query addonProfiles.httpapplicationrouting.config.HTTPApplicationRoutingZoneName -o json | ConvertFrom-Json)
+if (-not $aksHost) {
+    $aksHost=$(az aks show -n $aksName -g $resourceGroup --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o json | ConvertFrom-Json)
+}
+
 ## Showing Values that will be used
 
 Write-Host "===========================================================" -ForegroundColor Yellow
@@ -88,6 +95,8 @@ $tokens.couponshost="$($mongodb.name).documents.azure.com"
 $tokens.couponspwd=$mongodbKey
 
 $tokens.storage=$storage.blob
+
+$tokens.akshost=$aksHost
 
 # Standard fixed tokens
 $tokens.ingressclass="addon-http-application-routing"
