@@ -1,6 +1,9 @@
 Param (
     [parameter(Mandatory=$true)][string]$resourceGroup,
     [parameter(Mandatory=$true)][string]$sqlPwd,
+    [parameter(Mandatory=$false)][string]$servicePrincipalId,
+    [parameter(Mandatory=$false)][string]$servicePrincipalSecret,
+    [parameter(Mandatory=$false)][string]$tenant,
     [parameter(Mandatory=$false)][string]$outputFile=$null,
     [parameter(Mandatory=$false)][string]$gvaluesTemplate=".\\helm\\gvalues.template",
     [parameter(Mandatory=$false)][bool]$forcePwd=$false
@@ -13,6 +16,12 @@ function EnsureAndReturnFistItem($arr, $restype) {
     }
     return $arr[0]
 }
+
+# az login using service principle
+if ($servicePrincipalId){
+    az login --tenant $tenant --service-principal --username $servicePrincipalId --password $servicePrincipalSecret
+}
+
 
 # Check the rg
 $rg=$(az group show -n $resourceGroup -o json | ConvertFrom-Json)
