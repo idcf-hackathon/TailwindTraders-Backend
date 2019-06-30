@@ -155,6 +155,7 @@
         "version": "[parameters('pgversion')]",
         "administratorLogin": "[parameters('sqlServerAdministratorLogin')]",
         "administratorLoginPassword": "[parameters('sqlServerAdministratorLoginPassword')]",
+        "sslEnforcement": "Disabled",
         "storageProfile": {
           "storageMB": "5120",
           "backupRetentionDays": "7",
@@ -167,7 +168,28 @@
         "capacity": "2",
         "size": "5120",
         "family": "Gen5"
-      }
+      },
+      "resources": [       
+        {
+          "apiVersion": "2017-12-01",
+          "name": "stockdb",
+          "type": "databases",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceId('Microsoft.DBforPostgreSQL/servers', variables('pg_name'))]"
+          ],
+          "properties": { }
+        },
+        {
+            "type": "Microsoft.DBforPostgreSQL/servers/firewallrules",
+            "name": "[concat(variables('pg_name'), '/AllowAllWindowsAzureIps')]",
+            "apiVersion": "2017-12-01",
+            "properties": {
+                "startIpAddress": "0.0.0.0",
+                "endIpAddress": "0.0.0.0"
+            }
+        }
+      ]
     },    
     {
       "type": "Microsoft.Sql/servers",
