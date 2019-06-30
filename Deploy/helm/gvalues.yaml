@@ -17,7 +17,7 @@ inf:
       pwd: P2ssw0rd@123
     coupons:
       user: ttcuoponsdbtnlazct26g5ne
-      pwd: M4bJDHyhkMxGhyQ6o38kUBcgk2qaZpZT5n37j6fggKB1jJAokunDWFu9OmK70xT0x9qbYLGjsUzRb2La0IyGCg==
+      pwd: cj9RZR76FE3ZX2gdpDBIXzCvqH1m5RSiRr2b3lH0Zu0pxipq2PEKA1PIpcLtQHDKakhXQD54UkkFV4HUnxoKDQ==
       host: ttcuoponsdbtnlazct26g5ne.documents.azure.com
       port: "10255"
       dbName: Coupon
@@ -36,7 +36,7 @@ inf:
       pwd: P2ssw0rd@123
     cart:
       host: https://ttshoppingdbtnlazct26g5ne.documents.azure.com:443/
-      auth: IVjQ8eM5d8IQbizAW3BSfKUVUKu7adxtBgU0murH8cG65fDDg6CNwzllhCtlfxErHrIaC9Rq555qrHoQriQ0WA==
+      auth: zeIuzaAphNqSU7eQWrbut9oAXbQAsLK0JSs1VwWGSPlC5YPTPKDOaAQgkbrCegMmsf6cqgngS92eGaN02qRGKg==
   storage:
     productimages: https://ttstoragetnlazct26g5ne.blob.core.windows.net/product-list
     productdetailimages: https://ttstoragetnlazct26g5ne.blob.core.windows.net/product-detail
