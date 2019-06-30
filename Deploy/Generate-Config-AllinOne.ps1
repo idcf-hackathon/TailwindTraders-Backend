@@ -67,11 +67,13 @@ if ($forcePwd) {
 }
 
 ## Get AksHost
-$aksname = $(az aks list -g TailwindTradersBackend --query "[].{name:name}" -o json | ConvertFrom-Json)
-$aksHost=$(az aks show -n $aksName -g $resourceGroup --query addonProfiles.httpapplicationrouting.config.HTTPApplicationRoutingZoneName -o json | ConvertFrom-Json)
+$aksName = $(az aks list -g $resourceGroup --query "[].{name:name}" -o json | ConvertFrom-Json)
+$aksName=EnsureAndReturnFistItem $aksName "aksName"
+$aksHost=$(az aks show -n $aksName.name -g $resourceGroup --query addonProfiles.httpapplicationrouting.config.HTTPApplicationRoutingZoneName -o json | ConvertFrom-Json)
 if (-not $aksHost) {
-    $aksHost=$(az aks show -n $aksName -g $resourceGroup --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o json | ConvertFrom-Json)
+    $aksHost=$(az aks show -n $aksName.name -g $resourceGroup --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o json | ConvertFrom-Json)
 }
+Write-Host "aksHost: $($aksHost)" -ForegroundColor Yellow
 
 ## Showing Values that will be used
 
