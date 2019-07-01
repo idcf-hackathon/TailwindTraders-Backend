@@ -1,7 +1,15 @@
 Param(
     [parameter(Mandatory=$true)][string]$resourceGroup,
-    [parameter(Mandatory=$true)][string]$storageName
+    [parameter(Mandatory=$true)][string]$storageName,
+    [parameter(Mandatory=$false)][string]$servicePrincipalId,
+    [parameter(Mandatory=$false)][string]$servicePrincipalSecret,
+    [parameter(Mandatory=$false)][string]$tenant
 )
+
+# az login using service principle
+if ($servicePrincipalId){
+    az login --tenant $tenant --service-principal --username $servicePrincipalId --password $servicePrincipalSecret
+}
 
 $storage = $(az storage account show -n $storageName -g $resourceGroup -o json | ConvertFrom-Json)
 
