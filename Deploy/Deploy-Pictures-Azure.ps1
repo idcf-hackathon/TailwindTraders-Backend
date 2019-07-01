@@ -1,6 +1,7 @@
 Param(
     [parameter(Mandatory=$true)][string]$resourceGroup,
     [parameter(Mandatory=$true)][string]$storageName,
+    [parameter(Mandatory=$false)][string]$imageRootFolder,
     [parameter(Mandatory=$false)][string]$servicePrincipalId,
     [parameter(Mandatory=$false)][string]$servicePrincipalSecret,
     [parameter(Mandatory=$false)][string]$tenant
@@ -29,10 +30,10 @@ az storage container create --name "profiles-list" --public-access blob --connec
 Write-Host "Copying images..." -ForegroundColor Green
 
 $accountName=$storage.name
-az storage blob upload-batch --destination "$url" --destination coupon-list  --source .\tt-images\coupon-list --account-name $accountName
-az storage blob upload-batch --destination "$url" --destination product-detail --source .\tt-images\product-detail --account-name  $accountName
-az storage blob upload-batch --destination "$url" --destination product-list --source .\tt-images\product-list --account-name $accountName
-az storage blob upload-batch --destination "$url" --destination profiles-list --source .\tt-images\profiles-list --account-name $accountName
+az storage blob upload-batch --destination "$url" --destination coupon-list  --source $imageRootFolder\tt-images\coupon-list --account-name $accountName
+az storage blob upload-batch --destination "$url" --destination product-detail --source $imageRootFolder\tt-images\product-detail --account-name  $accountName
+az storage blob upload-batch --destination "$url" --destination product-list --source $imageRootFolder\tt-images\product-list --account-name $accountName
+az storage blob upload-batch --destination "$url" --destination profiles-list --source $imageRootFolder\tt-images\profiles-list --account-name $accountName
 
 
 
