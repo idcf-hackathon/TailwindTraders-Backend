@@ -2,7 +2,7 @@
 
 TailwindTraders后台应用使用了以下应用组件提供一套微服务架构的应用模型，运行在微软云Azure平台之上。
 
-![](/Documents/Images/hack/azure-resource-group.png)
+![azure resource group](/Documents/Images/hack/azure-resource-group.png)
 
 ## 组件列表/项目结构
 
@@ -44,7 +44,7 @@ TailwindTraders后台应用使用了以下应用组件提供一套微服务架�
 
 Azure DevOps中的构建流水线已经搭建完成，可以通过本组账号访问。
 
-![](/Documents/Images/hack/backend-CI.png)
+![auzre devops pipeline](/Documents/Images/hack/backend-CI.png)
 
 本项目的部署仍然需要手工完成，以下为部署脚本，请自行安装以下工具以便正常完成部署
 
