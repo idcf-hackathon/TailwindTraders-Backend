@@ -1,0 +1,289 @@
+{
+  "options": [
+  ],
+  "variables": {
+    "extracomposefile": { "value": "docker-compose.netcore22.yml" },
+    "registry": { "value": "" },
+    "resourcegroup": { "value": "TailwindTradersBackend" },
+    "servicePrincipalId": { "value": null, "isSecret": true },
+    "servicePrincipalSecret": { "value": null, "isSecret": true },
+    "sqlServerAdministratorLogin": { "value": "sqladmin" },
+    "sqlServerAdministratorLoginPassword": { "value": null, "isSecret": true },
+    "system.debug": { "value": "false", "allowOverride": true },
+    "tag": { "value": "prod" },
+    "tenant": { "value": null, "isSecret": true }
+  },
+  "retentionRules": [
+    {
+      "branches": ["+refs/heads/*"],
+      "artifacts": [],
+      "artifactTypesToDelete": ["FilePath", "SymbolStore"],
+      "daysToKeep": 10,
+      "minimumToKeep": 1,
+      "deleteBuildRecord": true,
+      "deleteTestResults": true
+    }
+  ],
+  "properties": {},
+  "tags": [],
+  "_links": {
+  },
+  "jobAuthorizationScope": 1,
+  "jobTimeoutInMinutes": 60,
+  "jobCancelTimeoutInMinutes": 5,
+  "badgeEnabled": true,
+  "process": {
+    "phases": [
+      {
+        "steps": [
+          {
+            "environment": {},
+            "enabled": true,
+            "continueOnError": false,
+            "alwaysRun": false,
+            "displayName": "Azure Deployment:Create Or Update Resource Group action on $(resourcegroup)",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "94a74903-f93f-4075-884f-dc11f34058b4",
+              "versionSpec": "2.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "ConnectedServiceName": "07d07eeb-e3c0-4d5e-909c-34e055dee57d",
+              "action": "Create Or Update Resource Group",
+              "resourceGroupName": "$(resourcegroup)",
+              "location": "Southeast Asia",
+              "templateLocation": "Linked artifact",
+              "csmFileLink": "",
+              "csmParametersFileLink": "",
+              "csmFile": "Deploy/deployment.json",
+              "csmParametersFile": "",
+              "overrideParameters": "-sqlServerAdministratorLogin $(sqlServerAdministratorLogin) -sqlServerAdministratorLoginPassword $(sqlServerAdministratorLoginPassword) -servicePrincipalId $(servicePrincipalId) -servicePrincipalSecret $(servicePrincipalSecret) -aksVersion \"1.14.6\" -pgVersion \"10\"",
+              "deploymentMode": "Incremental",
+              "enableDeploymentPrerequisites": "None",
+              "deploymentGroupEndpoint": "",
+              "project": "",
+              "deploymentGroupName": "",
+              "copyAzureVMTags": "true",
+              "runAgentServiceAsUser": "false",
+              "userName": "",
+              "password": "",
+              "outputVariable": "",
+              "deploymentName": "",
+              "deploymentOutputs": "",
+              "addSpnToEnvironment": "false"
+            }
+          },
+          {
+            "environment": {},
+            "enabled": true,
+            "continueOnError": false,
+            "alwaysRun": false,
+            "displayName": "ARM Outputs",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "584bcff2-3353-4f11-872b-6ba01267a972",
+              "versionSpec": "5.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+              "ConnectedServiceNameARM": "07d07eeb-e3c0-4d5e-909c-34e055dee57d",
+              "resourceGroupName": "$(resourcegroup)",
+              "prefix": "",
+              "outputNames": "",
+              "whenLastDeploymentIsFailed": "fail",
+              "deploymentNameFilter": ""
+            }
+          },
+          {
+            "environment": {},
+            "enabled": true,
+            "continueOnError": false,
+            "alwaysRun": false,
+            "displayName": "Azure CLI ",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "46e4be58-730b-4389-8a2f-ea10b3e5e815",
+              "versionSpec": "1.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "connectedServiceNameARM": "07d07eeb-e3c0-4d5e-909c-34e055dee57d",
+              "scriptLocation": "inlineScript",
+              "scriptPath": "",
+              "inlineScript": "echo \"##vso[task.setvariable variable=registry;]$(acr).azurecr.io\"",
+              "args": "",
+              "addSpnToEnvironment": "false",
+              "useGlobalConfig": "false",
+              "cwd": "",
+              "failOnStandardError": "false"
+            }
+          },
+          {
+            "environment": {},
+            "enabled": true,
+            "continueOnError": false,
+            "alwaysRun": false,
+            "displayName": "PowerShell Script",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+              "versionSpec": "2.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "targetType": "filePath",
+              "filePath": "Deploy/Generate-Config-AllinOne.ps1",
+              "arguments": "-resourceGroup $(resourcegroup) -sqlPwd $(sqlServerAdministratorLoginPassword)  -servicePrincipalId $(servicePrincipalId) -servicePrincipalSecret $(servicePrincipalSecret) -tenant $(tenant) -outputFile gvalue.yml",
+              "script": "# Write your powershell commands here.\n\nWrite-Host \"Hello World\"\n\n# Use the environment variables input below to pass secret variables to this script.",
+              "errorActionPreference": "stop",
+              "failOnStderr": "false",
+              "ignoreLASTEXITCODE": "false",
+              "pwsh": "false",
+              "workingDirectory": "Deploy"
+            }
+          },
+          {
+            "environment": {},
+            "enabled": true,
+            "continueOnError": false,
+            "alwaysRun": false,
+            "displayName": "Build services",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "6975e2d1-96d3-4afc-8a41-498b5d34ea19",
+              "versionSpec": "0.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "containerregistrytype": "Azure Container Registry",
+              "dockerRegistryEndpoint": "",
+              "azureSubscriptionEndpoint": "07d07eeb-e3c0-4d5e-909c-34e055dee57d",
+              "azureContainerRegistry": "$(acr)",
+              "dockerComposeFile": "Source/docker-compose.yml",
+              "additionalDockerComposeFiles": "",
+              "dockerComposeFileArgs": "TAG=$(tag)\nREGISTRY=$(registry)",
+              "projectName": "$(Build.Repository.Name)",
+              "qualifyImageNames": "true",
+              "action": "Build services",
+              "additionalImageTags": "",
+              "includeSourceTags": "false",
+              "includeLatestTag": "true",
+              "buildImages": "true",
+              "serviceName": "",
+              "containerName": "",
+              "ports": "",
+              "workDir": "",
+              "entrypoint": "",
+              "containerCommand": "",
+              "detached": "true",
+              "abortOnContainerExit": "true",
+              "imageDigestComposeFile": "$(Build.StagingDirectory)/docker-compose.images.yml",
+              "removeBuildOptions": "false",
+              "baseResolveDirectory": "",
+              "outputDockerComposeFile": "$(Build.StagingDirectory)/docker-compose.yml",
+              "dockerComposeCommand": "",
+              "arguments": "",
+              "dockerHostEndpoint": "",
+              "nopIfNoDockerComposeFile": "false",
+              "requireAdditionalDockerComposeFiles": "false",
+              "cwd": "$(System.DefaultWorkingDirectory)"
+            }
+          },
+          {
+            "environment": {},
+            "enabled": true,
+            "continueOnError": false,
+            "alwaysRun": false,
+            "displayName": "Push services",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "6975e2d1-96d3-4afc-8a41-498b5d34ea19",
+              "versionSpec": "0.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "containerregistrytype": "Azure Container Registry",
+              "dockerRegistryEndpoint": "",
+              "azureSubscriptionEndpoint": "07d07eeb-e3c0-4d5e-909c-34e055dee57d",
+              "azureContainerRegistry": "$(acr).azurecr.io",
+              "dockerComposeFile": "**/docker-compose.yml",
+              "additionalDockerComposeFiles": "",
+              "dockerComposeFileArgs": "",
+              "projectName": "$(Build.Repository.Name)",
+              "qualifyImageNames": "true",
+              "action": "Push services",
+              "additionalImageTags": "$(tag)",
+              "includeSourceTags": "false",
+              "includeLatestTag": "true",
+              "buildImages": "true",
+              "serviceName": "",
+              "containerName": "",
+              "ports": "",
+              "workDir": "",
+              "entrypoint": "",
+              "containerCommand": "",
+              "detached": "true",
+              "abortOnContainerExit": "true",
+              "imageDigestComposeFile": "$(Build.StagingDirectory)/docker-compose.images.yml",
+              "removeBuildOptions": "false",
+              "baseResolveDirectory": "",
+              "outputDockerComposeFile": "$(Build.StagingDirectory)/docker-compose.yml",
+              "dockerComposeCommand": "",
+              "arguments": "",
+              "dockerHostEndpoint": "",
+              "nopIfNoDockerComposeFile": "false",
+              "requireAdditionalDockerComposeFiles": "false",
+              "cwd": "$(System.DefaultWorkingDirectory)"
+            }
+          },
+          {
+            "environment": {},
+            "enabled": true,
+            "continueOnError": false,
+            "alwaysRun": false,
+            "displayName": "Publish Artifact: HelmScripts",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "2ff763a7-ce83-4e1f-bc89-0ae63477cebe",
+              "versionSpec": "1.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "PathtoPublish": "Deploy",
+              "ArtifactName": "HelmScripts",
+              "ArtifactType": "Container",
+              "TargetPath": "",
+              "Parallel": "false",
+              "ParallelCount": "8"
+            }
+          }
+        ],
+        "name": "Agent job 1",
+        "refName": "Phase_1",
+        "condition": "succeeded()",
+        "target": {
+          "executionOptions": { "type": 0 },
+          "allowScriptsAuthAccessOption": false,
+          "type": 1
+        },
+        "jobAuthorizationScope": 1,
+        "jobCancelTimeoutInMinutes": 1
+      }
+    ],
+    "type": 1
+  },
+  "repository": {
+  },
+  "processParameters": {},
+  "quality": 1,
+  "name": "Backend-CI"
+}
