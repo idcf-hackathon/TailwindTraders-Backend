@@ -48,10 +48,11 @@ Azure DevOps中的构建流水线已经搭建完成，可以通过本组账号�
 
 本项目的部署仍然需要手工完成，以下为部署脚本，请自行安装以下工具以便正常完成部署
 
-- Azure CLI
-- PowerShell
-- Helm
-- Visual Studio Code
+- [Azure CLI](https://docs.azure.cn/zh-cn/cli/install-azure-cli?view=azure-cli-latest)
+- [PowerShell](https://github.com/PowerShell/PowerShell)
+- [Helm](https://helm.sh/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Git](https://git-scm.com/)
 
 以下为部署步骤
 
