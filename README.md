@@ -53,6 +53,10 @@ Azure DevOps中的构建流水线已经搭建完成，可以通过本组账号�
 - [Helm](https://helm.sh/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Git](https://git-scm.com/)
+- [SSMS](https://docs.microsoft.com/zh-cn/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017) - 可用于更新后端应用的Sql Server数据库
+- [pgAdmin](https://www.pgadmin.org/) - 用于更新PostgreSQL中的数据
+- [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) - 用于更新图片存储
+
 
 以下为部署步骤
 
