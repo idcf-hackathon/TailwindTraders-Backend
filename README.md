@@ -57,7 +57,6 @@ Azure DevOps中的构建流水线已经搭建完成，可以通过本组账号�
 - [pgAdmin](https://www.pgadmin.org/) - 用于更新PostgreSQL中的数据
 - [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) - 用于更新图片存储
 
-
 以下为部署步骤
 
 ### Step 1 - 使用Azure CLI连接到Azure订阅
@@ -67,7 +66,7 @@ Azure DevOps中的构建流水线已经搭建完成，可以通过本组账号�
 az login
 
 ## 设置当前订阅为默认订阅
-az account set -s {subscription id}}
+az account set -s {subscription id}
 
 ## 创建Service Principle账号
 az ad sp create-for-rbac
@@ -122,7 +121,7 @@ kubectl get pods -n kube-system
 
 ```shell
 ## 获取ACR服务密钥
-az acr credential show -n {acr-name}} -g TailwindTradersBackend --output table
+az acr credential show -n {acr-name} -g TailwindTradersBackend --output table
 
 ## 创建k8s密钥仓库对象
 kubectl create secret docker-registry acr-auth --docker-server {acr-name}.azurecr.io --docker-username {acr-name} --docker-password {acr-password} --docker-email not@used.com
@@ -145,7 +144,7 @@ powershell .\Enable-Ssl.ps1 -sslSupport prod -aksName {aks-name} -resourceGroup 
 kubectl create serviceaccount ttsa
 
 ## 使用从Backend-CI中下载的制品包完成部署，假设制品包被解压到D:\HelmScripts\目录
-powershell ./Deploy-Images-Aks.ps1 -name "my-tt" -resourceGroup TailwindTradersBackend -aksName {aks-name} -acrName {acr-name} -tag prod -valuesFile "D:\HelmScripts\gvalue.yml" -tlsEnv prod
+powershell .\Deploy-Images-Aks.ps1 -name "my-tt" -resourceGroup TailwindTradersBackend -aksName {aks-name} -acrName {acr-name} -tag prod -valuesFile "D:\HelmScripts\gvalue.yml" -tlsEnv prod
 
 ## 可选：此命名将删除所有部署，如果需要从新部署可以使用此命令清楚所有服务
 FOR /f "tokens=*" %i IN ('helm list --short') DO helm del --purge %i
@@ -159,8 +158,13 @@ kubectl get pod -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:
 
 ```shell
 ## 所有商品图片将会打包在制品包中，假设制品包被解压到D:\HelmScripts\目录
-powershell .\Deploy-Pictures-Azure.ps1 -resourceGroup TailwindTradersBackend -storageName {storage-account-name}} -imageRootFolder "D:\HelmScripts"
+powershell .\Deploy-Pictures-Azure.ps1 -resourceGroup TailwindTradersBackend -storageName {storage-account-name} -imageRootFolder "D:\HelmScripts"
 ```
+
+## 验证服务正常
+
+https://[HTTP application routing domain]/webbff/v1
+https://[HTTP application routing domain]/cart-api
 
 ## 更新版本方式
 
