@@ -24,7 +24,7 @@ TailwindTraders后台应用使用了以下应用组件提供一套微服务架�
   - 无服务计算(Serverless) Azure Funciton
     - /Source/Services/TailwindTraders.Visits.Function: 用户访问统计服务
   - 托管的PostgreSQL数据库服务
-    - stockdb: TailwindTraders.Cart.Api的后台数据库
+    - stockdb: TailwindTraders.Stock.Api的后台数据库
   - 托管的NoSQL数据库服务 CosmosDB
     - MongoDB兼容模式：TailwindTraders.Coupon.Api: 代金券服务数据库
     - CosmoDB原生模式：TailwindTraders.Cart.Api: 购物车应用服务数据库
