@@ -59,7 +59,7 @@
               "csmParametersFileLink": "",
               "csmFile": "Deploy/deployment.json",
               "csmParametersFile": "",
-              "overrideParameters": "-sqlServerAdministratorLogin $(sqlServerAdministratorLogin) -sqlServerAdministratorLoginPassword $(sqlServerAdministratorLoginPassword) -servicePrincipalId $(servicePrincipalId) -servicePrincipalSecret $(servicePrincipalSecret) -aksVersion \"1.14.6\" -pgVersion \"10\"",
+              "overrideParameters": "-sqlServerAdministratorLogin $(sqlServerAdministratorLogin) -sqlServerAdministratorLoginPassword $(sqlServerAdministratorLoginPassword) -servicePrincipalId $(servicePrincipalId) -servicePrincipalSecret $(servicePrincipalSecret)",
               "deploymentMode": "Incremental",
               "enableDeploymentPrerequisites": "None",
               "deploymentGroupEndpoint": "",
